@@ -1,6 +1,8 @@
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import {
   signInStart,
   signInSuccess,
@@ -14,8 +16,14 @@ export default function SignIn() {
   const { loading, error: errorMessage } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(true);
+  const passwordRef = useRef();
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
+  };
+  const passwordToggle = () => {
+    setShowPassword(!showPassword);
+    passwordRef.current.type = showPassword ? "text" : "password";
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -73,11 +81,25 @@ export default function SignIn() {
             <div>
               <Label value="Your password" />
               <TextInput
+                ref={passwordRef}
                 type="password"
                 placeholder="********"
                 id="password"
                 onChange={handleChange}
               />
+              {showPassword ? (
+                <FaEyeSlash
+                  className="m-1 mt-4 cursor-pointer"
+                  onClick={passwordToggle}
+                  size={20}
+                />
+              ) : (
+                <FaEye
+                  className="m-1 mt-4 cursor-pointer"
+                  onClick={passwordToggle}
+                  size={20}
+                />
+              )}
             </div>
             <Button
               gradientDuoTone="purpleToPink"

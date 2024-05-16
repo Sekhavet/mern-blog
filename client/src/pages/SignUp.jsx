@@ -1,6 +1,8 @@
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import OAuth from "../components/OAuth";
 
 export default function SignUp() {
@@ -11,6 +13,14 @@ export default function SignUp() {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
+  };
+
+  const [showPassword, setShowPassword] = useState(true);
+  const passwordRef = useRef();
+
+  const passwordToggle = () => {
+    setShowPassword(!showPassword);
+    passwordRef.current.type = showPassword ? "text" : "password";
   };
 
   const handleSubmit = async (e) => {
@@ -80,11 +90,25 @@ export default function SignUp() {
             <div>
               <Label value="Your password" />
               <TextInput
+                ref={passwordRef}
                 type="password"
                 placeholder="Password"
                 id="password"
                 onChange={handleChange}
               />
+              {showPassword ? (
+                <FaEyeSlash
+                  className="m-1 mt-4 cursor-pointer"
+                  onClick={passwordToggle}
+                  size={20}
+                />
+              ) : (
+                <FaEye
+                  className="m-1 mt-4 cursor-pointer"
+                  onClick={passwordToggle}
+                  size={20}
+                />
+              )}
             </div>
             <Button
               gradientDuoTone="purpleToPink"

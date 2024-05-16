@@ -1,5 +1,6 @@
 import { Alert, Button, TextInput } from "flowbite-react";
 import { useEffect, useRef, useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import {
   getDownloadURL,
@@ -30,6 +31,8 @@ export default function DashProfile() {
   const [updateUserError, setUpdateUserError] = useState(null);
   const [formData, setFormData] = useState({});
   const filePickerRef = useRef();
+  const [showPassword, setShowPassword] = useState(true);
+  const passwordRef = useRef();
   const dispatch = useDispatch();
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -120,6 +123,11 @@ export default function DashProfile() {
     }
   };
 
+  const passwordToggle = () => {
+    setShowPassword(!showPassword);
+    passwordRef.current.type = showPassword ? "text" : "password";
+  };
+
   return (
     <div className="max-w-lg mx-auto p-3 w-full">
       <h1 className="my-7 text-center font-semibold text-3xl">Profile</h1>
@@ -185,9 +193,24 @@ export default function DashProfile() {
         <TextInput
           type="password"
           id="password"
+          ref={passwordRef}
           placeholder="password"
           onChange={handleChange}
         />
+
+        {showPassword ? (
+          <FaEyeSlash
+            className="m-1 cursor-pointer"
+            onClick={passwordToggle}
+            size={20}
+          />
+        ) : (
+          <FaEye
+            className="m-1 cursor-pointer"
+            onClick={passwordToggle}
+            size={20}
+          />
+        )}
         <Button type="submit" gradientDuoTone="purpleToBlue" outline>
           Update
         </Button>
