@@ -80,26 +80,28 @@ export default function SignIn() {
             </div>
             <div>
               <Label value="Your password" />
-              <TextInput
-                ref={passwordRef}
-                type="password"
-                placeholder="********"
-                id="password"
-                onChange={handleChange}
-              />
-              {showPassword ? (
-                <FaEyeSlash
-                  className="m-1 mt-4 cursor-pointer"
-                  onClick={passwordToggle}
-                  size={20}
+              <div className="relative">
+                <TextInput
+                  ref={passwordRef}
+                  type="password"
+                  placeholder="********"
+                  id="password"
+                  onChange={handleChange}
                 />
-              ) : (
-                <FaEye
-                  className="m-1 mt-4 cursor-pointer"
-                  onClick={passwordToggle}
-                  size={20}
-                />
-              )}
+                {showPassword ? (
+                  <FaEyeSlash
+                    className="m-1 absolute top-2 right-2 cursor-pointer"
+                    onClick={passwordToggle}
+                    size={20}
+                  />
+                ) : (
+                  <FaEye
+                    className="m-1 absolute top-2 right-2 cursor-pointer"
+                    onClick={passwordToggle}
+                    size={20}
+                  />
+                )}
+              </div>
             </div>
             <Button
               gradientDuoTone="purpleToPink"

@@ -190,27 +190,29 @@ export default function DashProfile() {
           defaultValue={currentUser.email}
           onChange={handleChange}
         />
-        <TextInput
-          type="password"
-          id="password"
-          ref={passwordRef}
-          placeholder="password"
-          onChange={handleChange}
-        />
+        <div className="relative">
+          <TextInput
+            type="password"
+            id="password"
+            ref={passwordRef}
+            placeholder="password"
+            onChange={handleChange}
+          />
 
-        {showPassword ? (
-          <FaEyeSlash
-            className="m-1 cursor-pointer"
-            onClick={passwordToggle}
-            size={20}
-          />
-        ) : (
-          <FaEye
-            className="m-1 cursor-pointer"
-            onClick={passwordToggle}
-            size={20}
-          />
-        )}
+          {showPassword ? (
+            <FaEyeSlash
+              className="m-1 cursor-pointer z-10 absolute right-2 top-2"
+              onClick={passwordToggle}
+              size={20}
+            />
+          ) : (
+            <FaEye
+              className="m-1 cursor-pointer z-10 absolute right-2 top-2"
+              onClick={passwordToggle}
+              size={20}
+            />
+          )}
+        </div>
         <Button type="submit" gradientDuoTone="purpleToBlue" outline>
           Update
         </Button>
