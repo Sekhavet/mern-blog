@@ -30,7 +30,10 @@ export const updateUser = async (req, res, next) => {
     }
     if (!req.body.username.match(/^[a-zA-Z0-9.-_]+$/)) {
       return next(
-        errorHandler(400, "Username can only contain letters and numbers")
+        errorHandler(
+          400,
+          "Username can only contain letters, numbers and these symbols .-_"
+        )
       );
     }
   }
@@ -49,6 +52,18 @@ export const updateUser = async (req, res, next) => {
     );
     const { password, ...rest } = updatedUser._doc;
     res.status(200).json(rest);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteUser = async (req, res, next) => {
+  if (!req.user.isAdmin && req.user.id !== req.params.userId) {
+    return next(errorHandler(403, "You are not allowed to delete this user"));
+  }
+  try {
+    await User.findByIdAndDelete(req.params.userId);
+    res.status(200).json("User has been deleted");
   } catch (error) {
     next(error);
   }
